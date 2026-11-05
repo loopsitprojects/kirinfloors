@@ -18,38 +18,27 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'address_line_2' => 'nullable|string|max:255',
-            'city' => 'required|string|max:255',
-            'state' => 'nullable|string|max:255',
-            'zip' => 'required|string|max:20',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => ['required', 'string', 'max:30', 'regex:/^[0-9+()\s-]{7,}$/'],
+            'whatsapp' => ['nullable', 'string', 'max:30', 'regex:/^[0-9+()\s-]{7,}$/'],
             'email' => 'required|email|max:255',
+            'city' => 'required|string|max:255',
+            'property_type' => 'required|in:House,Commercial property',
         ]);
 
-        $order = Order::create([
-            'status' => 'pending',
-            'first_name' => $request->input('first_name'),
-            'last_name' => $request->input('last_name'),
-            'address' => $request->input('address'),
-            'address_line_2' => $request->input('address_line_2'),
-            'city' => $request->input('city'),
-            'state' => $request->input('state'),
-            'zip' => $request->input('zip'),
-            'email' => $request->input('email'),
-        ]);
+        $order = Order::create($validated + ['status' => 'pending']);
 
         $cart = session()->get('cart', []);
         foreach ($cart as $productId => $prod) {
             $product = Product::find($productId);
             if ($product) {
+                $floorArea = CartController::floorArea($prod);
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $product->id,
-                    'quantity' => $prod['linear_feet'],
-                    'price' => $product->price * $prod['linear_feet'],
+                    'quantity' => $floorArea,
+                    'price' => $product->price * $floorArea,
                 ]);
             }
         }            
@@ -57,6 +46,6 @@ class CheckoutController extends Controller
         // Clear the cart
         session()->forget('cart');
 
-        return redirect()->route('thank-you-order')->with('success', 'Order placed successfully!');
+        return redirect()->route('thank-you-order')->with('success', 'Quote request received!');
     }
 }

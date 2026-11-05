@@ -128,7 +128,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6 text-center">
                     <div class="breadcrumb-title">
-                        <h1>Checkout</h1>
+                        <h1>Request a Quote</h1>
                     </div>
                     <div class="breadcrumb-icon">
                         <i class="las la-angle-down"></i>
@@ -142,7 +142,7 @@
             <div class="row g-4">
                 @if (empty($cart))
                     <div class="text-center p-5 bg-white rounded shadow">
-                        <p class="h4 text-muted">Your cart is empty. You cannot proceed to checkout.</p>
+                        <p class="h4 text-muted">Your cart is empty. Add a product to request a quote.</p>
                         <a href="{{ route('products') }}" class="btn btn-brand-gold mt-4">Continue Shopping</a>
                     </div>
                 @else
@@ -151,38 +151,44 @@
                         <div class="row g-5">
                             <div class="col-lg-7">
                                 <div class="bg-white p-4 p-md-5 rounded shadow-sm">
+                                    <h3 class="mb-2">Request a Quote</h3>
+                                    <p class="text-muted mb-4">Tell us about your space and our team will call you with a quote.</p>
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul class="mb-0">
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
                                     <div class="row g-3">
-                                        <h3 class="mb-4">Shipping Information</h3>
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control" name="first_name"
-                                                placeholder="First Name">
+                                        <div class="col-12">
+                                            <input type="text" class="form-control" name="name" value="{{ old('name') }}"
+                                                placeholder="Name *" autocomplete="name" required>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control" name="last_name"
-                                                placeholder="Last Name">
+                                            <input type="tel" class="form-control" name="phone" value="{{ old('phone') }}"
+                                                placeholder="Contact number *" autocomplete="tel" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="tel" class="form-control" name="whatsapp" value="{{ old('whatsapp') }}"
+                                                placeholder="WhatsApp number (optional)">
                                         </div>
                                         <div class="col-12">
-                                            <input type="text" class="form-control" name="address" placeholder="Address">
+                                            <input type="email" class="form-control" name="email" value="{{ old('email') }}"
+                                                placeholder="Email address *" autocomplete="email" required>
                                         </div>
-                                        <div class="col-12">
-                                            <input type="text" class="form-control" name="address_line_2"
-                                                placeholder="Apartment, suite, etc. (optional)">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="city" value="{{ old('city') }}"
+                                                placeholder="City *" required>
                                         </div>
-                                        <div class="col-md-5">
-                                            <input type="text" class="form-control" name="city" placeholder="City">
-                                        </div>
-                                        {{-- <div class="col-md-4">
-                                            <select class="form-select" name="state">
-                                                <option selected>State</option>
+                                        <div class="col-md-6">
+                                            <select class="form-select" name="property_type" required>
+                                                <option value="" disabled @selected(!old('property_type'))>Property type *</option>
+                                                <option value="House" @selected(old('property_type') === 'House')>House</option>
+                                                <option value="Commercial property" @selected(old('property_type') === 'Commercial property')>Commercial property</option>
                                             </select>
-                                        </div> --}}
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="zip"
-                                                placeholder="ZIP Code">
-                                        </div>
-                                        <div class="col-12">
-                                            <input type="email" class="form-control" name="email"
-                                                placeholder="Email Address">
                                         </div>
                                     </div>
                                 </div>
@@ -207,19 +213,14 @@
                             <div class="col-lg-5">
                                 {{-- sticky-top --}}
                                 <div class="bg-white p-4 rounded shadow-sm " style="top: 100px;">
-                                    <h3 class="mb-4">Order Summary</h3>
+                                    <h3 class="mb-4">Your Selection</h3>
                                     <div class="d-flex flex-column gap-3 mb-3">
-                                        @php
-                                            $total = 0;
-                                        @endphp
                                         @foreach ($products as $product)
                                             @php
-                                                $cartItem = is_array($cart[$product->id]) ? $cart[$product->id] : ['quantity' => $cart[$product->id], 'linear_feet' => 0, 'height' => 0, 'width' => 0];
-                                                $linearFeet = $cartItem['linear_feet'] ?? 0;
+                                                $cartItem = is_array($cart[$product->id]) ? $cart[$product->id] : ['quantity' => $cart[$product->id], 'height' => 0, 'width' => 0];
+                                                $floorArea = \App\Http\Controllers\CartController::floorArea($cartItem);
                                                 $height = $cartItem['height'] ?? 0;
                                                 $width = $cartItem['width'] ?? 0;
-                                                $itemTotal = 0; //$product->price * $linearFeet;
-                                                $total += $itemTotal;
                                             @endphp
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="d-flex align-items-center">
@@ -230,25 +231,19 @@
                                                         <p class="fw-semibold text-black mb-0">{{ $product->name }}
                                                         </p>
                                                         <p class="text-muted small mb-0">{{ $height }} ft × {{ $width }} ft</p>
-                                                        <p class="text-muted small">Linear Feet: {{ number_format($linearFeet, 2) }}</p>
+                                                        <p class="text-muted small mb-0">Floor area: {{ number_format($floorArea, 2) }} sq ft</p>
                                                     </div>
                                                 </div>
-                                                <p class="fw-semibold mb-0">Rs. {{ 0 * number_format($itemTotal, 2) }}</p>
+                                                <p class="fw-semibold text-muted mb-0">On quote</p>
                                             </div>
                                         @endforeach
                                     </div>
                                     <div class="border-top pt-3">
-                                        <div class="d-flex justify-content-between py-1"><span
-                                                class="text-muted">Subtotal</span><span>Rs.
-                                                {{ number_format($total, 2) }}</span></div>
-                                        <div class="d-flex justify-content-between py-1"><span
-                                                class="text-muted">Shipping</span><span>Rs. {{ number_format(0, 2) }}</span>
-                                        </div>
                                         <div class="d-flex justify-content-between pt-2 h5 fw-bold">
-                                            <span>Total</span><span>Rs. {{ number_format($total, 2) }}</span>
+                                            <span>Price</span><span>On quote</span>
                                         </div>
                                     </div>
-                                    <button class="btn btn-brand-dark w-100 mt-4 btn-lg" type="submit">Place Order</button>
+                                    <button class="btn btn-brand-dark w-100 mt-4 btn-lg" type="submit">Request a Quote</button>
                                 </div>
                             </div>
                         </div>
@@ -261,6 +256,10 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
+            // main.js hides every select behind niceSelect, and browsers cannot
+            // enforce `required` on a hidden select, so keep this one native.
+            $('select[name="property_type"]').niceSelect('destroy');
+
             // Handle quantity change
             $('.quantity-input').on('change', function() {
                 const productId = $(this).data('id');

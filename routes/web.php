@@ -40,7 +40,7 @@ Route::get('/contact-us', function () {
     return view('contact', ['data' => $data]);
 })->name('contact_us');
 
-Route::get('/contact/success', function () {
+Route::get('/contact-us/thank-you', function () {
     return view('thank-you-contact');
 })->name('thank-you-contact');
 

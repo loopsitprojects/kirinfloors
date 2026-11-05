@@ -38,11 +38,11 @@
                     <div class="contact-info-wrap mt-40">
                         <div class="single-contact-info wow fadeInUp animated" data-wow-delay="200ms">
                             <h6 class="text-white">Phone</h6>
-                            <p class="p-xl">{{ $footerData['footer_phone'] }}</p>
+                            <p class="p-xl"><a href="tel:{{ preg_replace('/[^\d+]/', '', $footerData['footer_phone']) }}" style="color: inherit; font-size: inherit;">{{ $footerData['footer_phone'] }}</a></p>
                         </div>
                         <div class="single-contact-info wow fadeInUp animated" data-wow-delay="400ms">
                             <h6 class="text-white">E-mail</h6>
-                            <p>{{ $footerData['footer_email'] }}</p>
+                            <p><a href="mailto:{{ $footerData['footer_email'] }}" style="color: inherit; font-size: inherit;">{{ $footerData['footer_email'] }}</a></p>
                         </div>
                         <div class="single-contact-info wow fadeInUp animated" data-wow-delay="600ms">
                             <h6 class="text-white">Address</h6>

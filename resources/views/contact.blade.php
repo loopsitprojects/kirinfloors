@@ -47,11 +47,11 @@
                             </div>
                             <div class="single-contact-info wow fadeInUp animated" data-wow-delay="200ms">
                                 <p>Email</p>
-                                <h4>{{ $data['email'] }}</h4>
+                                <h4><a href="mailto:{{ $data['email'] }}" style="color: inherit; font-size: inherit;">{{ $data['email'] }}</a></h4>
                             </div>
                             <div class="single-contact-info wow fadeInUp animated" data-wow-delay="400ms">
                                 <p>Phone</p>
-                                <h4>{{ $data['phone'] }}</h4>
+                                <h4><a href="tel:{{ preg_replace('/[^\d+]/', '', $data['phone']) }}" style="color: inherit; font-size: inherit;">{{ $data['phone'] }}</a></h4>
                             </div>
                             <div class="single-contact-info wow fadeInUp animated" data-wow-delay="600ms">
                                 <p>Address</p>
@@ -76,12 +76,17 @@
                                 {{ session('success') }}
                             </div>
                         @endif
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                {{ $errors->first() }}
+                            </div>
+                        @endif
                         <form action="{{ route('contact_us.store') }}" method="POST">
                             @csrf
-                            <input type="text" name="name" placeholder="Your Name" required>
-                            <input type="email" name="email" placeholder="Email" required>
-                            <input type="tel" name="phone" placeholder="Phone Number">
-                            <textarea name="message" cols="30" rows="10" placeholder="Message" required></textarea>
+                            <input type="text" name="name" value="{{ old('name') }}" placeholder="Your Name" required>
+                            <input type="email" name="email" value="{{ old('email') }}" placeholder="Email" required>
+                            <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="Phone Number">
+                            <textarea name="message" cols="30" rows="10" placeholder="Message" required>{{ old('message') }}</textarea>
                             <input type="submit" value="Submit">
                         </form>
                     </div>

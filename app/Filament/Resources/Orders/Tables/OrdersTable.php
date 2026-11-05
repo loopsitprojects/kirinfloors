@@ -17,22 +17,20 @@ class OrdersTable
             ->columns([
                 TextColumn::make('status')
                     ->searchable(),
-                TextColumn::make('first_name')
+                TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('last_name')
+                TextColumn::make('phone')
+                    ->label('Contact number')
                     ->searchable(),
-                TextColumn::make('address')
-                    ->searchable(),
-                TextColumn::make('address_line_2')
-                    ->searchable(),
-                TextColumn::make('city')
-                    ->searchable(),
-                // TextColumn::make('state')
-                //     ->searchable(),
-                TextColumn::make('zip')
+                TextColumn::make('whatsapp')
+                    ->label('WhatsApp number')
                     ->searchable(),
                 TextColumn::make('email')
                     ->label('Email address')
+                    ->searchable(),
+                TextColumn::make('city')
+                    ->searchable(),
+                TextColumn::make('property_type')
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()

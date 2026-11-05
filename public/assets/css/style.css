@@ -248,20 +248,8 @@ hr {
   letter-spacing: -2px;
   color: #181818;
 }
-.section-title .h2 {
-  font-size: 55px;
-  font-weight: 400;
-  line-height: 60px;
-  letter-spacing: -2px;
-  color: #181818;
-}
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
   .section-title h2 {
-    font-size: 45px;
-    line-height: 50px;
-    margin: 0;
-  }
-  .section-title .h2 {
     font-size: 45px;
     line-height: 50px;
     margin: 0;
@@ -273,20 +261,9 @@ hr {
     line-height: 50px;
     margin: 0;
   }
-  .section-title .h2 {
-    font-size: 45px;
-    line-height: 50px;
-    margin: 0;
-  }
 }
 @media (max-width: 767px) {
   .section-title h2 {
-    font-size: 30px;
-    line-height: 35px;
-    margin: 15px 0;
-    letter-spacing: -1px;
-  }
-  .section-title .h2 {
     font-size: 30px;
     line-height: 35px;
     margin: 15px 0;
@@ -1981,7 +1958,7 @@ input[type=search]::-webkit-search-results-decoration {
   z-index: 9;
   display: flex;
   align-items: center;
-  background: #fff;
+  background: #d00226;
 }
 .header-area .header-inner-box {
   display: flex;
@@ -2028,7 +2005,7 @@ input[type=search]::-webkit-search-results-decoration {
   line-height: 1;
   padding: 40px 0;
   overflow: hidden;
-  color: #181818;
+  color: #fff;
 }
 .main-menu ul > li:hover > ul {
   opacity: 1;
@@ -2089,7 +2066,7 @@ input[type=search]::-webkit-search-results-decoration {
   left: 0;
   width: 0%;
   height: 2px;
-  background: #171717;
+  background: #fff;
   visibility: hidden;
   opacity: 0;
   transition: all 0.5s ease 0s;
@@ -2105,7 +2082,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 
 .main-menu ul li.active a {
-  color: #1D1D1D;
+  color: #fff;
 }
 
 .main-menu ul li.active:before {
@@ -2115,7 +2092,7 @@ input[type=search]::-webkit-search-results-decoration {
   left: 0;
   width: 100%;
   height: 2px;
-  background: #171717;
+  background: #fff;
 }
 
 .main-menu ul > li > ul li a.active {
@@ -2308,6 +2285,7 @@ input[type=search]::-webkit-search-results-decoration {
   margin-right: 40px;
   position: relative;
   top: 2px;
+  color: #fff;
 }
 .header-right .search-trigger i:hover {
   cursor: pointer;

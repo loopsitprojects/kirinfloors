@@ -15,7 +15,8 @@ class OrderItemInfolist
                 //     ->numeric(),
                 TextEntry::make('product.name'),
                 TextEntry::make('quantity')
-                    ->numeric(),
+                    ->label('Floor area (sq ft)')
+                    ->numeric(decimalPlaces: 2),
                 TextEntry::make('price')
                     ->money('Rs.'),
                 TextEntry::make('total')

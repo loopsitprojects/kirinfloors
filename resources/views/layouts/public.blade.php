@@ -28,6 +28,7 @@
 
     <!--Favicon-->
     <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('favicon-48.png') }}" type="image/png" sizes="48x48">
 
     <!-- Bootstrap CSS -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -109,6 +110,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         font-size: 0.65rem;
         padding: 0.2em 0.5em;
         border: 1px solid white;
+    }
+
+    /* Keep the header's space when it turns sticky (position: fixed). Otherwise the
+       page shrinks by 100px, and short pages flicker as it switches on and off. */
+    #header-1 {
+        min-height: 100px;
     }
 
     .nav-icon {
@@ -368,7 +375,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <div class="contact-number d-none">
                                 <div class="icon"><i class="las la-phone-volume"></i></div>
                                 <div class="title">
-                                    <h4>+94 77 738 5059</h4>
+                                    <h4><a href="tel:+94777385059" style="color: inherit; font-size: inherit;">+94 77 738 5059</a></h4>
                                 </div>
                             </div>
                             <!--  <div class="header-btn">
@@ -419,7 +426,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                     <div class="action-bar">
                                         <a href="mailto:kirinfloors@sais.lk"><i
                                                 class="las la-envelope"></i>kirinfloors@sais.lk</a>
-                                        <a href="tel:+94"><i class="fal fa-phone"></i>+94 77 738 5059</a>
+                                        <a href="tel:+94777385059"><i class="fal fa-phone"></i>+94 77 738 5059</a>
                                         <a href="{{ route('contact_us') }}" class="theme-btn">Contact Us</a>
                                     </div>
                                 </div>

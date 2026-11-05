@@ -203,7 +203,7 @@
                 <div class="col-lg-6">
                     <h1 class="display-5 fw-bold">{{ $product->name }}</h1>
                     <p class="text-muted">{{ $product->category }}</p>
-                    <!--<p class="price-per-unit">Rs. {{ number_format($product->price, 2) }} per linear ft</p>-->
+                    {{-- <p class="price-per-unit">Rs. {{ number_format($product->price, 2) }} per linear ft</p> --}}
                     <p class="lead">{{ !empty($product->short_description) ? $product->short_description : $product->description }}</p>
                     <form action="{{ route('cart.store') }}" method="POST" class="mt-4" id="product-detail-form" data-price="{{ $product->price }}">
                         @csrf
@@ -213,12 +213,12 @@
                         <div class="dimension-input-group">
                             <div>
                                 <label for="height" class="form-label fw-bold">Length (ft):</label>
-                                <input type="number" id="height" name="height" class="form-control" placeholder="Enter length" min="0" step="0.01" required>
+                                <input type="number" id="height" name="height" class="form-control" placeholder="Enter length" min="0.01" max="1000" step="0.01" required>
                             </div>
                             <span class="fw-bold">×</span>
                             <div>
                                 <label for="width" class="form-label fw-bold">Width (ft):</label>
-                                <input type="number" id="width" name="width" class="form-control" placeholder="Enter width" min="0" step="0.01" required>
+                                <input type="number" id="width" name="width" class="form-control" placeholder="Enter width" min="0.01" max="1000" step="0.01" required>
                             </div>
                         </div>
                         
@@ -290,23 +290,19 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('product-detail-form');
             const heightInput = document.getElementById('height');
             const widthInput = document.getElementById('width');
             const priceDisplay = document.getElementById('calculated-price');
             const addToCartBtn = document.getElementById('add-to-cart-btn');
-            const pricePerLinearFoot = parseFloat(form.dataset.price);
 
             function calculateAndDisplay() {
                 const height = parseFloat(heightInput.value) || 0;
                 const width = parseFloat(widthInput.value) || 0;
 
                 if (height > 0 && width > 0) {
-                    // Calculate linear feet (perimeter: 2 * (height + width))
-                    const linearFeet = (height * width);
-                    const totalPrice = linearFeet * pricePerLinearFoot;
+                    const floorArea = height * width;
 
-                    priceDisplay.innerHTML = `<strong>${linearFeet.toFixed(2)} linear ft</strong>` // = Rs. ${totalPrice.toFixed(2)}`;
+                    priceDisplay.innerHTML = `<strong>Floor area: ${floorArea.toFixed(2)} sq ft</strong>`;
                     addToCartBtn.disabled = false;
                 } else {
                     priceDisplay.textContent = '';

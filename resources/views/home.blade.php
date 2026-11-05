@@ -454,13 +454,13 @@
                         <div class="single-blog-item">
                             <div class="blog-title">
                                 <h5><a
-                                        href="{{ route('blog.show', Str::slug($news->title) . '-' . $news->id) }}">{{ $news['title'] }}</a>
+                                        href="{{ route('blog.show', $news->slug) }}">{{ $news['title'] }}</a>
                                 </h5>
                             </div>
                             <div class="blog-content">
                                 <p>{{ $news['short_description'] }}</p>
                             </div>
-                            <a href="{{ route('blog.show', Str::slug($news->title) . '-' . $news->id) }}"
+                            <a href="{{ route('blog.show', $news->slug) }}"
                                 class="read-more-btn bordered-btn">Read More</a>
                             @if ($index < 2)
                                 <hr>

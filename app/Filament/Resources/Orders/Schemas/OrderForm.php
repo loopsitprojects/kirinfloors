@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Orders\Schemas;
 
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -13,22 +14,25 @@ class OrderForm
             ->components([
                 TextInput::make('status')
                     ->required(),
-                TextInput::make('first_name')
+                TextInput::make('name')
                     ->required(),
-                TextInput::make('last_name')
-                    ->required(),
-                TextInput::make('address')
-                    ->required(),
-                TextInput::make('address_line_2'),
-                TextInput::make('city')
-                    ->required(),
-                TextInput::make('state'),
-                TextInput::make('zip')
-                    ->required(),
+                TextInput::make('phone')
+                    ->label('Contact number')
+                    ->tel(),
+                TextInput::make('whatsapp')
+                    ->label('WhatsApp number')
+                    ->tel(),
                 TextInput::make('email')
                     ->label('Email address')
                     ->email()
                     ->required(),
+                TextInput::make('city')
+                    ->required(),
+                Select::make('property_type')
+                    ->options([
+                        'House' => 'House',
+                        'Commercial property' => 'Commercial property',
+                    ]),
             ]);
     }
 }

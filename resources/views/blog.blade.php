@@ -48,7 +48,7 @@
                             <div class="blog-content">
                                 <p>{{ $post->short_description }}</p>
                             </div>
-                            <a href="{{ route('blog.show', Str::slug($post->slug ?? $post->title) . '-' . $post->id) }}" class="read-more-btn bordered-btn">Read More</a>
+                            <a href="{{ route('blog.show', $post->slug) }}" class="read-more-btn bordered-btn">Read More</a>
                         </div>
                     </div>
                 @endforeach

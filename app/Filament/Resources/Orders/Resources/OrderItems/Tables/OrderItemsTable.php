@@ -21,7 +21,8 @@ class OrderItemsTable
                 TextColumn::make('product.name')
                     ->sortable(),
                 TextColumn::make('quantity')
-                    ->numeric()
+                    ->label('Floor area (sq ft)')
+                    ->numeric(decimalPlaces: 2)
                     ->sortable(),
                 TextColumn::make('price')
                     ->money('Rs.')

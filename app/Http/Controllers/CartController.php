@@ -11,48 +11,52 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
         $products = Product::whereIn('id', array_keys($cart))->get();
-        
-        // Calculate total
-        $total = 0;
-        foreach ($products as $product) {
-            if (isset($cart[$product->id])) {
-                $cartItem = is_array($cart[$product->id]) ? $cart[$product->id] : ['quantity' => $cart[$product->id], 'linear_feet' => 0];
-                $linearFeet = $cartItem['linear_feet'] ?? 0;
-                $total += 0; // $product->price * $linearFeet;
-            }
-        }
-        
-        return view('cart', compact('cart', 'products', 'total'));
+
+        return view('cart', compact('cart', 'products'));
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'height' => 'exclude_if:quantity,0|required|numeric|min:0.01|max:1000',
+            'width' => 'exclude_if:quantity,0|required|numeric|min:0.01|max:1000',
+        ]);
+
         $cart = session()->get('cart', []);
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity', 1);
         $height = $request->input('height', 0);
         $width = $request->input('width', 0);
-        
-        // Calculate linear feet (perimeter formula: 2 * (height + width))
-        $linearFeet = 2 * ($height + $width);
-        
+
+        // Floor area in sq ft
+        $floorArea = $height * $width;
+
         if ($quantity == 0) {
             unset($cart[$productId]);
         } else {
             if (isset($cart[$productId])) {
                 $cart[$productId]['quantity'] += $quantity;
-                $cart[$productId]['linear_feet'] += $linearFeet;
+                $cart[$productId]['floor_area'] = self::floorArea($cart[$productId]) + $floorArea;
             } else {
                 $cart[$productId] = [
                     'quantity' => $quantity,
                     'height' => $height,
                     'width' => $width,
-                    'linear_feet' => $linearFeet
+                    'floor_area' => $floorArea,
                 ];
             }
         }
-        
+
         session()->put('cart', $cart);
+
         return redirect()->back()->with('success', 'Product added to cart!');
+    }
+
+    /**
+     * Carts saved before floor_area existed only hold the dimensions.
+     */
+    public static function floorArea(array $item): float
+    {
+        return $item['floor_area'] ?? (float) ($item['height'] ?? 0) * (float) ($item['width'] ?? 0);
     }
 }

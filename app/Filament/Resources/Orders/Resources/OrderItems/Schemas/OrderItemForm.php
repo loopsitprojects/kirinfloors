@@ -18,6 +18,7 @@ class OrderItemForm
                     ->required()
                     ->numeric(),
                 TextInput::make('quantity')
+                    ->label('Floor area (sq ft)')
                     ->required()
                     ->numeric(),
                 TextInput::make('price')

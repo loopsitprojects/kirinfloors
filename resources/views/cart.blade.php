@@ -150,25 +150,23 @@
                         <div class="bg-white p-3 rounded shadow">
                             @foreach ($products as $product)
                                 @php
-                                    $cartItem = is_array($cart[$product->id]) ? $cart[$product->id] : ['quantity' => $cart[$product->id], 'linear_feet' => 0, 'height' => 0, 'width' => 0];
-                                    $linearFeet = $cartItem['linear_feet'] ?? 0;
+                                    $cartItem = is_array($cart[$product->id]) ? $cart[$product->id] : ['quantity' => $cart[$product->id], 'height' => 0, 'width' => 0];
+                                    $floorArea = \App\Http\Controllers\CartController::floorArea($cartItem);
                                     $height = $cartItem['height'] ?? 0;
                                     $width = $cartItem['width'] ?? 0;
-                                    $itemTotal = 0; //$product->price * $linearFeet;
                                 @endphp
                                 <div class="d-flex align-items-center py-3 border-bottom cart-item-row" data-id="{{ $product->id }}">
                                     <img src="{{ Storage::publicUrl($product->image) }}" alt="{{ $product->name }}"
                                         style="width: 100px; height: 100px; object-fit: cover;" class="rounded">
                                     <div class="flex-grow-1 ms-3">
                                         <h5 class="mb-1">{{ $product->name }}</h5>
-                                        {{-- <p class="text-muted mb-1">Rs. {{ 0 * number_format($product->price, 2) }} per linear ft</p> --}}
                                         <p class="text-muted mb-1 small">Dimensions: {{ $height }} ft × {{ $width }} ft</p>
-                                        <p class="text-muted mb-1 small">Linear Feet: {{ number_format($linearFeet, 2) }}</p>
+                                        <p class="text-muted mb-1 small">Floor area: {{ number_format($floorArea, 2) }} sq ft</p>
                                         <button class="btn btn-sm btn-outline-danger remove-from-cart-btn"
                                             data-id="{{ $product->id }}">Remove</button>
                                     </div>
-                                    <div class="text-end fw-bold h5" style="width: 150px;">
-                                        Rs. {{ number_format($itemTotal, 2) }}
+                                    <div class="text-end fw-bold text-muted" style="width: 150px;">
+                                        On quote
                                     </div>
                                 </div>
                             @endforeach
@@ -177,21 +175,12 @@
                     <div class="col-lg-4">
                         {{-- sticky-top --}}
                         <div class="bg-white p-4 rounded shadow" style="top: 100px;">
-                            <h3 class="mb-4">Order Summary</h3>
-                            <div class="d-flex justify-content-between py-2 border-bottom">
-                                <span>Subtotal</span>
-                                <span>Rs. {{ number_format($total ?? 0, 2) }}</span>
-                            </div>
-                            <div class="d-flex justify-content-between py-2 border-bottom">
-                                <span>Shipping</span>
-                                <span>Rs. {{ number_format(0, 2) }}</span>
-                            </div>
+                            <h3 class="mb-4">Your Selection</h3>
                             <div class="d-flex justify-content-between py-3 h5 fw-bold">
-                                <span>Total</span>
-                                <span>Rs. {{ number_format($total ?? 0, 2) }}</span>
+                                <span>Price</span>
+                                <span>On quote</span>
                             </div>
-                            <a href="{{ route('checkout.index') }}" id="checkout-button" class="btn btn-brand-dark w-100 mt-3">Proceed to
-                                Checkout</a>
+                            <a href="{{ route('checkout.index') }}" id="checkout-button" class="btn btn-brand-dark w-100 mt-3">Continue to Quote Request</a>
                         </div>
                     </div>
                 @endif

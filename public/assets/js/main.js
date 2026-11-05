@@ -76,7 +76,7 @@
     nav: true,
     loop: true,
     autoplay: true,
-    autoplayTimeout:10000,
+    autoplayTimeout:30000,
     // smartSpeed: 500,
     animateIn: "fadeIn",
     smartSpeed: 8000,

@@ -28,8 +28,8 @@
                         <div class="icon mb-4">
                             <i class="las la-check-circle" style="font-size: 100px; color: var(--brand-gold);"></i>
                         </div>
-                        <h2 class="mb-3">Message Sent Successfully!</h2>
-                        <p class="mb-5">Thank you for contacting us. We have received your message and will get back to you as soon as possible.</p>
+                        <h2 class="mb-3">Message Sent</h2>
+                        <p class="mb-5">Thanks, our team will contact you within 24 hours.</p>
                         <a href="{{ route('home') }}" class="theme-btn">Back to Home</a>
                     </div>
                 </div>
