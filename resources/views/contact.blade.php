@@ -81,7 +81,7 @@
                                 {{ $errors->first() }}
                             </div>
                         @endif
-                        <form action="{{ route('contact_us.store') }}" method="POST">
+                        <form action="{{ route('contact_us.store') }}" method="POST" data-recaptcha="contact">
                             @csrf
                             <input type="text" name="name" value="{{ old('name') }}" placeholder="Your Name" required>
                             <input type="email" name="email" value="{{ old('email') }}" placeholder="Email" required>
@@ -89,6 +89,7 @@
                             <textarea name="message" cols="30" rows="10" placeholder="Message" required>{{ old('message') }}</textarea>
                             <input type="submit" value="Submit">
                         </form>
+                        @include('partials.recaptcha')
                     </div>
                 </div>
             </div>

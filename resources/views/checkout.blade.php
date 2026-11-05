@@ -146,7 +146,7 @@
                         <a href="{{ route('products') }}" class="btn btn-brand-gold mt-4">Continue Shopping</a>
                     </div>
                 @else
-                    <form action="{{ route('checkout.store') }}" method="POST">
+                    <form action="{{ route('checkout.store') }}" method="POST" data-recaptcha="quote">
                         @csrf
                         <div class="row g-5">
                             <div class="col-lg-7">
@@ -248,6 +248,7 @@
                             </div>
                         </div>
                     </form>
+                    @include('partials.recaptcha')
                 @endif
             </div>
         </div>

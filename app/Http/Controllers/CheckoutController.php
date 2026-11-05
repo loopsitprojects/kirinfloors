@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Services\Recaptcha;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
@@ -26,6 +27,12 @@ class CheckoutController extends Controller
             'city' => 'required|string|max:255',
             'property_type' => 'required|in:House,Commercial property',
         ]);
+
+        if (! Recaptcha::passes($request, 'quote')) {
+            return back()->withInput()->withErrors([
+                'form' => 'Sorry, we could not verify your request. Please try again, or call or email us directly.',
+            ]);
+        }
 
         $order = Order::create($validated + ['status' => 'pending']);
 
