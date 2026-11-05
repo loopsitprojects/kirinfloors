@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Filament\Resources\Products\Tables;
+
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+
+class ProductsTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('name')
+                    ->searchable(),
+                TextColumn::make('price')
+                    ->money('Rs.')
+                    ->sortable(),
+                TextColumn::make('qty')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('category')
+                    ->searchable(),
+                TextColumn::make('design_code')
+                    ->searchable(),
+                TextColumn::make('design_grain')
+                    ->searchable(),
+                TextColumn::make('colour_tone')
+                    ->searchable(),
+                TextColumn::make('texture')
+                    ->searchable(),
+                TextColumn::make('dimensions')
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
+            ])
+            ->recordActions([
+                EditAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+}
