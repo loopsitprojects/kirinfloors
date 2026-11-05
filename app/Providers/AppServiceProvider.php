@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Filament\Support\Facades\FilamentTimezone;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
@@ -22,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
+
+        // Times stay stored in UTC; the admin panel shows them in Sri Lankan time.
+        FilamentTimezone::set('Asia/Colombo');
+
         Storage::macro('publicUrl', function ($path) {
             $disk = Storage::disk('public');
             if ($disk->exists($path)) {
