@@ -8,9 +8,13 @@ use App\Models\ContactEnquiry;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -23,30 +27,66 @@ class ContactEnquiryResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedEnvelope;
 
+    public static function infolist(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                TextEntry::make('name')
+                    ->label('Name'),
+                TextEntry::make('email')
+                    ->label('Email')
+                    ->copyable(),
+                TextEntry::make('phone')
+                    ->label('Phone')
+                    ->placeholder('-')
+                    ->copyable(),
+                TextEntry::make('created_at')
+                    ->label('Received At')
+                    ->dateTime(),
+                TextEntry::make('emailed_at')
+                    ->label('Notification Sent')
+                    ->dateTime()
+                    ->placeholder('Not sent'),
+                TextEntry::make('message')
+                    ->label('Message')
+                    ->columnSpanFull(),
+            ]);
+    }
+
     public static function table(Table $table): Table
     {
         return $table
             ->defaultSort('created_at', 'desc')
+            ->recordAction(ViewAction::class)
             ->columns([
                 TextColumn::make('created_at')
                     ->label('Received')
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->weight('medium'),
                 TextColumn::make('email')
-                    ->searchable(),
+                    ->searchable()
+                    ->copyable(),
                 TextColumn::make('phone')
-                    ->searchable(),
+                    ->searchable()
+                    ->placeholder('-')
+                    ->copyable(),
                 TextColumn::make('message')
-                    ->wrap()
+                    ->limit(50)
+                    ->tooltip(fn (ContactEnquiry $record): string => $record->message)
                     ->searchable(),
                 TextColumn::make('emailed_at')
                     ->label('Emailed')
                     ->dateTime()
-                    ->placeholder('Not sent'),
+                    ->placeholder('Not sent')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->recordActions([
+                ViewAction::make(),
                 Action::make('sendEmail')
                     ->label(fn (ContactEnquiry $record): string => $record->emailed_at ? 'Resend' : 'Send email')
                     ->icon(Heroicon::OutlinedPaperAirplane)
@@ -55,6 +95,7 @@ class ContactEnquiryResource extends Resource
                     ->modalDescription(fn (): string => 'It will be emailed to '.(config('services.contact_email') ?: '(no CONTACT_EMAIL set)').'.')
                     ->modalSubmitActionLabel('Send')
                     ->action(fn (ContactEnquiry $record) => static::sendEmail($record)),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
