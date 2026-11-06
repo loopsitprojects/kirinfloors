@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactEnquiry extends Model
 {
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'message',
+        'emailed_at',
+    ];
+
     protected $casts = [
         'emailed_at' => 'datetime',
     ];

@@ -68,7 +68,7 @@ class TechnicalData extends Page
                                 ->schema([
                                     TextInput::make('breadcrumb_title')
                                         ->label('Breadcrumb Title'),
-                                    FileUpload::make('breadcrumb_image')->disk('public')->directory('breadcrumb')->image(),
+                                    FileUpload::make('breadcrumb_image')->disk('public')->directory('breadcrumb')->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']),
                                 ]),
                             Tab::make('FAQ')
                                 ->schema([

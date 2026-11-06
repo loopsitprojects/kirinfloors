@@ -74,7 +74,7 @@ class Home extends Page
                                                 ->disk('public')
                                                 ->visibility('public')
                                                 ->label('Background Image')
-                                                ->image()
+                                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                                 ->directory('hero-slides')
                                                 ->required(),
                                             TextInput::make('subtitle')
@@ -116,7 +116,7 @@ class Home extends Page
                                                 ->disk('public')
                                                 ->visibility('public')
                                                 ->label('Service Image')
-                                                ->image()
+                                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                                 ->directory('services')
                                                 ->required(),
                                             TextInput::make('label')
@@ -146,7 +146,7 @@ class Home extends Page
                                         ->disk('public')
                                         ->visibility('public')
                                         ->label('About Image')
-                                        ->image()
+                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                         ->directory('about')
                                         ->required(),
                                     Section::make('History')
@@ -183,7 +183,7 @@ class Home extends Page
                                         ->disk('public')
                                         ->visibility('public')
                                         ->label('Background Image')
-                                        ->image()
+                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                         ->directory('process'),
                                     Repeater::make('process_steps')
                                         ->schema([
@@ -191,7 +191,7 @@ class Home extends Page
                                                 ->disk('public')
                                                 ->visibility('public')
                                                 ->label('Step Icon')
-                                                ->image()
+                                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                                 ->directory('process-icons')
                                                 ->required(),
                                             TextInput::make('title')
@@ -250,7 +250,7 @@ class Home extends Page
                                                 ->disk('public')
                                                 ->visibility('public')
                                                 ->label('Member Photo')
-                                                ->image()
+                                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                                 ->directory('team')
                                                 ->required(),
                                             TextInput::make('name')
@@ -282,7 +282,7 @@ class Home extends Page
                                                 ->disk('public')
                                                 ->visibility('public')
                                                 ->label('Sponsor Logo')
-                                                ->image()
+                                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                                 ->directory('sponsors')
                                                 ->required(),
                                             TextInput::make('alt')
@@ -311,7 +311,7 @@ class Home extends Page
                                                 ->disk('public')
                                                 ->visibility('public')
                                                 ->label('Project Image')
-                                                ->image()
+                                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                                 ->directory('projects')
                                                 ->required(),
                                             TextInput::make('title')
@@ -335,7 +335,7 @@ class Home extends Page
                                                 ->disk('public')
                                                 ->visibility('public')
                                                 ->label('Gallery Image')
-                                                ->image()
+                                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                                 ->directory('gallery')
                                                 ->required(),
                                             TextInput::make('alt')

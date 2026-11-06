@@ -46,7 +46,7 @@
                         </div>
                         <div class="single-contact-info wow fadeInUp animated" data-wow-delay="600ms">
                             <h6 class="text-white">Address</h6>
-                            <p>{!! nl2br($footerData['footer_address']) !!}</p>
+                            <p>{!! nl2br(e($footerData['footer_address'] ?? '')) !!}</p>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
         <div class="search-inner">
             <div class="container">
                 <div class="logo">
-                    <a class="navbar-brand" href="{{ route('home') }}"><img src="assets/img/logo-white.png" alt=""></a>
+                    <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('assets/img/logo-white.png') }}" alt=""></a>
                 </div>
                 <button class="close-search"><span class="la la-times"></span></button>
                 <form method="get" action="{{ route('products') }}">

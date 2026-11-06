@@ -18,13 +18,15 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'product_id' => 'required|integer|exists:products,id',
+            'quantity' => 'nullable|integer|min:0|max:100',
             'height' => 'exclude_if:quantity,0|required|numeric|min:0.01|max:1000',
             'width' => 'exclude_if:quantity,0|required|numeric|min:0.01|max:1000',
         ]);
 
         $cart = session()->get('cart', []);
-        $productId = $request->input('product_id');
-        $quantity = $request->input('quantity', 1);
+        $productId = (int) $request->input('product_id');
+        $quantity = (int) $request->input('quantity', 1);
         $height = $request->input('height', 0);
         $width = $request->input('width', 0);
 

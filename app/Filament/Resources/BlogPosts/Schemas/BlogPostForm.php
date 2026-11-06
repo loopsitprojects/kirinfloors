@@ -34,7 +34,7 @@ class BlogPostForm
                     ->required()
                     ->disk('public')
                     ->directory('blog_images')
-                    ->image()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->columnSpanFull(),
                 RichEditor::make('content')
                     ->fileAttachmentsDisk('public')

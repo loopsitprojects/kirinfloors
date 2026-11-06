@@ -29,7 +29,7 @@ class ProductForm
                     ->required()
                     ->disk('public')
                     ->directory('products')
-                    ->image()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->columnSpanFull(),
                 Repeater::make('additional_images')
                     ->label('Additional Images')
@@ -37,7 +37,7 @@ class ProductForm
                         FileUpload::make('path')
                             ->disk('public')
                             ->directory('products_additional_images')
-                            ->image()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->required(),
                     ])
                     ->columnSpanFull()

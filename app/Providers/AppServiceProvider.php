@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Support\Facades\FilamentTimezone;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,7 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Model::unguard();
+        // Uploads become public files, so only plain image formats (no SVG, which can carry scripts).
+        FileUpload::configureUsing(fn (FileUpload $upload) => $upload->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']));
+        RichEditor::configureUsing(fn (RichEditor $editor) => $editor->fileAttachmentsAcceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']));
 
         // Times stay stored in UTC; the admin panel shows them in Sri Lankan time.
         FilamentTimezone::set('Asia/Colombo');

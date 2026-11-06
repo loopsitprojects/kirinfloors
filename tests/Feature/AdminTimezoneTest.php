@@ -21,7 +21,7 @@ class AdminTimezoneTest extends TestCase
         ]);
         $enquiry->forceFill(['created_at' => '2026-11-05 05:08:10'])->saveQuietly();
 
-        $this->actingAs(User::factory()->create())
+        $this->actingAs(User::factory()->create(['is_admin' => true]))
             ->get('/admin/contact-enquiries')
             ->assertOk()
             ->assertSee('Nov 5, 2026 10:38:10')

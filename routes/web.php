@@ -44,13 +44,17 @@ Route::get('/contact-us/thank-you', function () {
     return view('thank-you-contact');
 })->name('thank-you-contact');
 
-Route::post('/contact-us', [App\Http\Controllers\ContactController::class, 'store'])->name('contact_us.store');
+Route::post('/contact-us', [App\Http\Controllers\ContactController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('contact_us.store');
 
 Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
 
-Route::resource('cart', App\Http\Controllers\CartController::class);
-Route::resource('checkout', App\Http\Controllers\CheckoutController::class);
+Route::resource('cart', App\Http\Controllers\CartController::class)->only(['index', 'store']);
+Route::resource('checkout', App\Http\Controllers\CheckoutController::class)
+    ->only(['index', 'store'])
+    ->middlewareFor('store', 'throttle:5,1');
 
 Route::get('/order/success', function () {
     return view('thank-you-order');
@@ -58,12 +62,3 @@ Route::get('/order/success', function () {
 
 Route::resource('blog', App\Http\Controllers\BlogController::class)->only(['index', 'show']);
 Route::resource('press-release', App\Http\Controllers\PressReleaseController::class)->only(['index', 'show']);
-
-Route::get('/adduser231412341234', function () {
-    App\Models\User::create([
-        'name' => 'Sadira',
-        'email' => 'sadira@loopsintegrated.com',
-        'password' => bcrypt('vc7sO*Xd%7}3'),
-        //'password' => bcrypt('Qhjs^734534$32b#ghs'),
-    ]);
-});

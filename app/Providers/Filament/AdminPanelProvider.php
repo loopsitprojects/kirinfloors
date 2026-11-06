@@ -7,6 +7,7 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages\Dashboard;
+use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -28,6 +29,13 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            // Each admin can turn on authenticator-app codes from their profile (top-right menu).
+            ->profile()
+            ->multiFactorAuthentication([
+                AppAuthentication::make()
+                    ->brandName('Kirin Floors')
+                    ->recoverable(),
+            ])
             ->colors([
                 'primary' => Color::Amber,
             ])

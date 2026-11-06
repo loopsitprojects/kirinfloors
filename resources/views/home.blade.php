@@ -28,7 +28,7 @@
                             <div class="col-xl-12 col-lg-12 col-md-10 wow fadeInUp animated" data-wow-delay=".2s">
                                 <div class="section-title">
                                     <h6 class="text-white">{{ $slide['subtitle'] }}</h6>
-                                    <h1 class="text-white">{!! $slide['title'] !!}</h1>
+                                    <h1 class="text-white">{!! Str::sanitizeHtml((string) ($slide['title'] ?? '')) !!}</h1>
                                 </div>
                                 <p class="text-white">{{ $slide['description'] }}</p>
                                 <a href="{{ $slide['button_link'] }}" class="white-btn mt-40">{{ $slide['button_text'] }} <i
@@ -50,14 +50,14 @@
         </div>
         <div class="logo-side">
             <div class="logo">
-                <a href="{{ route('home') }}"><img src="assets/img/logo.png" alt="Kirin Flooring"></a>
+                <a href="{{ route('home') }}"><img src="{{ asset('assets/img/logo.png') }}" alt="Kirin Flooring"></a>
             </div>
         </div>
         <div class="side-info">
             <div class="contact-list mb-40">
                 <p>Welcome to our flooring studio—specialists in SPC collections and precision click-lock systems for
                     rapid, reliable installs.</p>
-                <img src="assets/img/off-canvas.jpg" alt="Showcase">
+                <img src="{{ asset('assets/img/off-canvas.jpg') }}" alt="Showcase">
                 <div class="mt-30 mb-30">
                     <a href="{{ route('contact_us') }}" class="white-btn">Get In Touch</a>
                 </div>
@@ -201,7 +201,7 @@
                                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="aboutOne"
                                     data-bs-parent="#accordionAbout">
                                     <div class="accordion-body">
-                                        {!! $data['history_content'] !!}
+                                        {!! Str::sanitizeHtml((string) ($data['history_content'] ?? '')) !!}
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +216,7 @@
                                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="aboutTwo"
                                     data-bs-parent="#accordionAbout">
                                     <div class="accordion-body">
-                                        {!! $data['mission_content'] !!}
+                                        {!! Str::sanitizeHtml((string) ($data['mission_content'] ?? '')) !!}
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +232,7 @@
                                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="aboutThree"
                                     data-bs-parent="#accordionAbout">
                                     <div class="accordion-body">
-                                        {!! $data['vision_content'] !!}
+                                        {!! Str::sanitizeHtml((string) ($data['vision_content'] ?? '')) !!}
                                     </div>
                                 </div>
                             </div>
@@ -382,7 +382,7 @@
                     @foreach ($data['testimonials'] as $testimonial)
                         <div class="single-testimonial-item">
                             <div class="testimonial-quote">
-                                <img src="assets/img/quote.png" alt="">
+                                <img src="{{ asset('assets/img/quote.png') }}" alt="">
                             </div>
                             <div class="testimonial-content">
                                 <div class="testimonial-text">

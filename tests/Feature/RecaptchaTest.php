@@ -49,7 +49,7 @@ class RecaptchaTest extends TestCase
     {
         $this->google(['success' => true, 'score' => 0.5, 'action' => 'quote']);
 
-        $this->post('/checkout', $this->quote)->assertRedirect('/order/success');
+        $this->withSession(['cart' => [999 => ['quantity' => 1, 'height' => 10, 'width' => 10, 'floor_area' => 100]]])->post('/checkout', $this->quote)->assertRedirect('/order/success');
 
         $this->assertSame(1, Order::count());
     }
@@ -71,7 +71,7 @@ class RecaptchaTest extends TestCase
     {
         $this->google(['success' => true, 'score' => 0.1, 'action' => 'quote']);
 
-        $this->post('/checkout', $this->quote)->assertSessionHasErrors('form');
+        $this->withSession(['cart' => [999 => ['quantity' => 1, 'height' => 10, 'width' => 10, 'floor_area' => 100]]])->post('/checkout', $this->quote)->assertSessionHasErrors('form');
 
         $this->assertSame(0, Order::count());
     }
@@ -79,7 +79,7 @@ class RecaptchaTest extends TestCase
     public function test_token_from_a_different_form_is_rejected(): void
     {
         $this->google(['success' => true, 'score' => 0.9, 'action' => 'contact']);
-        $this->post('/checkout', $this->quote)->assertSessionHasErrors('form');
+        $this->withSession(['cart' => [999 => ['quantity' => 1, 'height' => 10, 'width' => 10, 'floor_area' => 100]]])->post('/checkout', $this->quote)->assertSessionHasErrors('form');
         $this->assertSame(0, Order::count());
     }
 

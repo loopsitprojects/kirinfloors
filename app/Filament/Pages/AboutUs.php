@@ -99,7 +99,7 @@ class AboutUs extends Page
                                     TextInput::make('breadcrumb_title')
                                         ->label('Breadcrumb Title')
                                         ->default('About Us'),
-                                    FileUpload::make('breadcrumb_image')->disk('public')->directory('breadcrumb')->image(),
+                                    FileUpload::make('breadcrumb_image')->disk('public')->directory('breadcrumb')->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']),
                                 ]),
 
                             // Tab::make('Off-canvas')
@@ -117,7 +117,7 @@ class AboutUs extends Page
                                     FileUpload::make('about_image')
                                         ->disk('public')
                                         ->directory('about')
-                                        ->image()
+                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                         ->label('About Image'),
                                 ]),
 
@@ -128,7 +128,7 @@ class AboutUs extends Page
                                             TextInput::make('date'),
                                             TextInput::make('title'),
                                             Textarea::make('text'),
-                                            FileUpload::make('image')->disk('public')->directory('timeline')->image(),
+                                            FileUpload::make('image')->disk('public')->directory('timeline')->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']),
                                         ])
                                         ->defaultItems(5)
                                         ->collapsible()
@@ -143,7 +143,7 @@ class AboutUs extends Page
                                     FileUpload::make('about_more_image')
                                         ->disk('public')
                                         ->directory('about')
-                                        ->image()
+                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                         ->label('Image'),
                                     RichEditor::make('about_more_content')
                                         ->label('Content')
@@ -157,7 +157,7 @@ class AboutUs extends Page
                                     FileUpload::make('history_image')
                                         ->disk('public')
                                         ->directory('about')
-                                        ->image()
+                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                         ->label('History Image'),
                                 ]),
 
@@ -175,7 +175,7 @@ class AboutUs extends Page
                                     Textarea::make('gallery_description')->label('Description')->default('Flooring Installation for Homes and Businesses'),
                                     Repeater::make('gallery')
                                         ->schema([
-                                            FileUpload::make('image')->disk('public')->directory('gallery')->image(),
+                                            FileUpload::make('image')->disk('public')->directory('gallery')->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']),
                                             TextInput::make('alt'),
                                         ])
                                         ->defaultItems(6)
@@ -191,7 +191,7 @@ class AboutUs extends Page
                                         ->schema([
                                             TextInput::make('name'),
                                             TextInput::make('position'),
-                                            FileUpload::make('image')->disk('public')->directory('team')->image(),
+                                            FileUpload::make('image')->disk('public')->directory('team')->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']),
                                         ])
                                         ->defaultItems(4)
                                         ->collapsible()

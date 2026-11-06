@@ -26,13 +26,13 @@
         </div>
         {{-- <div class="logo-side">
             <div class="logo">
-                <a href="index.html"><img src="assets/img/logo-white.png" alt=""></a>
+                <a href="index.html"><img src="{{ asset('assets/img/logo-white.png') }}" alt=""></a>
             </div>
         </div> --}}
         {{-- <div class="side-info">
             <div class="contact-list mb-40">
                 <p>{{ $data['off_canvas_text'] }}</p>
-                <img src="assets/img/off-canvas.jpg" alt="">
+                <img src="{{ asset('assets/img/off-canvas.jpg') }}" alt="">
                 <div class="mt-30 mb-30">
                     <a href="contact.html" class="white-btn">Get In Touch</a>
                 </div>
@@ -72,7 +72,7 @@
             <div class="row">
                 <div class="col-xl-7 col-lg-7 order-2 order-md-1">
                     <div class="about-content-wrap">
-                        {!! $data['about_description'] !!}
+                        {!! Str::sanitizeHtml((string) ($data['about_description'] ?? '')) !!}
                     </div>
                 </div>
                 <div class="col-xl-5 col-lg-5 order-1 order-md-2">
@@ -141,7 +141,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="about-content-wrap obverse">
-                        {!! $data['about_more_content'] !!}
+                        {!! Str::sanitizeHtml((string) ($data['about_more_content'] ?? '')) !!}
                     </div>
                 </div>
 
@@ -156,7 +156,7 @@
             <div class="row">
                 <div class="col-xl-7 col-lg-7 order-2 order-md-1">
                     <div class="about-content-wrap">
-                        {!! $data['history_description'] !!}
+                        {!! Str::sanitizeHtml((string) ($data['history_description'] ?? '')) !!}
                     </div>
                 </div>
                 <div class="col-xl-5 col-lg-5 order-1 order-md-2">

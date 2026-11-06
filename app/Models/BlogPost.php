@@ -7,6 +7,16 @@ use Illuminate\Support\Facades\DB;
 
 class BlogPost extends Model
 {
+    protected $fillable = [
+        'category',
+        'title',
+        'slug',
+        'short_description',
+        'image_path',
+        'content',
+        'meta_data',
+    ];
+
     protected $casts = [
         'content' => 'array',
         'meta_data' => 'array',

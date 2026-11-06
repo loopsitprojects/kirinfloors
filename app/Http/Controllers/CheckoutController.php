@@ -28,6 +28,12 @@ class CheckoutController extends Controller
             'property_type' => 'required|in:House,Commercial property',
         ]);
 
+        $cart = session()->get('cart', []);
+
+        if (empty($cart)) {
+            return redirect()->route('checkout.index');
+        }
+
         if (! Recaptcha::passes($request, 'quote')) {
             return back()->withInput()->withErrors([
                 'form' => 'Sorry, we could not verify your request. Please try again, or call or email us directly.',
@@ -36,7 +42,6 @@ class CheckoutController extends Controller
 
         $order = Order::create($validated + ['status' => 'pending']);
 
-        $cart = session()->get('cart', []);
         foreach ($cart as $productId => $prod) {
             $product = Product::find($productId);
             if ($product) {

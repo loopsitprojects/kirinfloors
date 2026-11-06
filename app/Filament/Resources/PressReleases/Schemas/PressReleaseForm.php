@@ -29,7 +29,7 @@ class PressReleaseForm
                     ->required()
                     ->disk('public')
                     ->directory('press_release_images')
-                    ->image()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->columnSpanFull(),
                 RichEditor::make('content')
                     ->fileAttachmentsDisk('public')

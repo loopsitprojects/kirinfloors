@@ -5,6 +5,16 @@
 
     RewriteEngine On
 
+    # The project root is the web root, so keep code, config, logs and private files out of reach.
+    RewriteRule (^|/)\.(?!well-known/) - [F,L]
+    RewriteRule ^(app|bootstrap|config|database|resources)(/|$) - [F,L]
+    RewriteRule ^(routes|tests|vendor|node_modules)(/|$) - [F,L]
+    RewriteRule ^storage/(logs|framework|app/private)(/|$) - [F,L]
+    RewriteRule ^storage/.*\.(php|phtml|phar)$ - [F,L]
+    RewriteRule ^(artisan|default\.php|composer-setup\.php)$ - [F,L]
+    RewriteRule ^(composer\.(json|lock)|package(-lock)?\.json)$ - [F,L]
+    RewriteRule ^(phpunit\.xml|vite\.config\.js|README\.md)$ - [F,L]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

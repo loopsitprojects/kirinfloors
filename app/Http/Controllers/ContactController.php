@@ -22,7 +22,7 @@ class ContactController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',
-            'message' => 'required|string',
+            'message' => 'required|string|max:5000',
         ]);
 
         if (! Recaptcha::passes($request, 'contact')) {

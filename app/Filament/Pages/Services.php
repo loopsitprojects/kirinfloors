@@ -87,7 +87,7 @@ class Services extends Page
                                 ->schema([
                                     TextInput::make('breadcrumb_title')
                                         ->label('Breadcrumb Title'),
-                                    FileUpload::make('breadcrumb_image')->disk('public')->directory('breadcrumb')->image(),
+                                    FileUpload::make('breadcrumb_image')->disk('public')->directory('breadcrumb')->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']),
                                 ]),
 
                             Tab::make('Service Section')
@@ -103,14 +103,14 @@ class Services extends Page
                                         ->disk('public')
                                         ->visibility('public')
                                         ->label('Main Service Image')
-                                        ->image()
+                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                         ->directory('services'),
                                     Repeater::make('services')
                                         ->schema([
                                             FileUpload::make('image')
                                                 ->disk('public')
                                                 ->visibility('public')
-                                                ->image()
+                                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                                 ->directory('services'),
                                             TextInput::make('category')
                                                 ->label('Category'),
@@ -124,7 +124,7 @@ class Services extends Page
                                         ->disk('public')
                                         ->visibility('public')
                                         ->label('Side Service Image')
-                                        ->image()
+                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                         ->directory('services'),
                                     Repeater::make('accordion_items')
                                         ->schema([
@@ -165,7 +165,7 @@ class Services extends Page
                                             FileUpload::make('author_image')
                                                 ->disk('public')
                                                 ->visibility('public')
-                                                ->image()
+                                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                                 ->directory('testimonials'),
                                         ])
                                         ->minItems(1)
