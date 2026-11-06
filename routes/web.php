@@ -62,3 +62,6 @@ Route::get('/order/success', function () {
 
 Route::resource('blog', App\Http\Controllers\BlogController::class)->only(['index', 'show']);
 Route::resource('press-release', App\Http\Controllers\PressReleaseController::class)->only(['index', 'show']);
+
+// Unknown URLs: runs through the web middleware so the header (cart count etc.) is right. Keep this last.
+Route::fallback(fn () => response()->view('errors.404', [], 404));
